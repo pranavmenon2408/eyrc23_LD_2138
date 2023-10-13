@@ -20,7 +20,7 @@ class swift():
 		self.drone_position = [0.0,0.0,0.0]	
 
 		# [x_setpoint, y_setpoint, z_setpoint]
-		self.setpoint=[[0,0,23],[2,0,23],[2,2,23],[2,2,25],[-5,2,25],[-5,-3,25],[-5,-3,21],[7,-3,21],[7,0,21],[0,0,21]] # whycon marker at the position of the dummy given in the scene. Make the whycon marker associated with position_to_hold dummy renderable and make changes accordingly
+		self.setpoint=[[0,0,23],[2,0,23],[2,2,23],[2,2,25],[-5,2,25],[-5,-3,25],[-5,-3,21],[7,-3,21],[7,0,21],[0,0,19]] # whycon marker at the position of the dummy given in the scene. Make the whycon marker associated with position_to_hold dummy renderable and make changes accordingly
 
 
 		#Declaring a cmd of message type swift_msgs and initializing values
@@ -38,8 +38,8 @@ class swift():
 		#initial setting of Kp, Kd and ki for [roll, pitch, throttle]. eg: self.Kp[2] corresponds to Kp value in throttle axis
 		#after tuning and computing corresponding PID parameters, change the parameters
 
-		self.Kp = [100*0.06, 100*0.06, 120*0.06]
-		self.Ki = [5*0.0008, 0, 150*0.0008]
+		self.Kp = [200*0.06, 100*0.06, 150*0.06]
+		self.Ki = [5*0.0008, 0, 250*0.0008]
 		self.Kd = [200*0.3, 0, 600*0.3]
    
 		#-----------------------Add other required variables for pid here ----------------------------------------------
@@ -140,10 +140,11 @@ class swift():
 		self.timechange=self.now-self.last_time
 		if (self.timechange>self.sample_time):
 			if (self.last_time!=0):	
-				if((0<abs(self.prev_error[0])<=0.15) and (0<abs(self.prev_error[1])<=0.15) and (0<abs(self.prev_error[2])<=0.15)):
-					self.index+=1
-					if self.index>=len(self.setpoint):
-						self.index-=1
+				if((0<abs(self.prev_error[0])<=0.20) and (0<abs(self.prev_error[1])<=0.20) and (0<abs(self.prev_error[2])<=0.20)):
+					if self.index<(len(self.setpoint)-1):
+						self.index+=1
+					
+						
 
 				
 				self.error[0]=-(self.drone_position[0]-self.setpoint[self.index][0])
