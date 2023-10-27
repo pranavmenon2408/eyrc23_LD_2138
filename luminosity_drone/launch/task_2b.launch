@@ -30,6 +30,7 @@
     <remap from="image" to="/video_frames"/>
   </node>
   
+  <node pkg="luminosity_drone" type="LD_2138_life_form_detector.py" name="life_form_detection"/>
 
   <node name="spawn_organism" type="spawning" pkg="luminosity_drone"/>
 
